@@ -7,7 +7,12 @@ const app = express();
 const morgan = require ('morgan');
 const bodyParser = require ('body-parser');
 const cors = require('cors');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+
+const errorHandler = require('./_middleware/error-handler');
+
+// DB Connection
+require('./_middleware/db');
 
 app.use(cookieParser());
 
@@ -26,5 +31,9 @@ if(process.env.NODE_ENV === 'development') {
 }
 
 
-const port = process.env.PORT
+// global error
+app.use(errorHandler);
+
+const port = process.env.PORT;
+
 app.listen(port, () => console.log(`server running on port ${port}`))
